@@ -470,13 +470,21 @@ export const RetroWindow: React.FC<RetroWindowProps> = ({
         className="w-full h-full relative select-none flex items-center justify-center overflow-hidden bg-transparent"
         style={{ fontFamily: '"Press Start 2P", monospace' }}
       >
-        {crtEnabled && <div aria-hidden="true" className="absolute inset-0 crt-overlay z-40 pointer-events-none" />}
+        {crtEnabled && (
+          <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center z-40 pointer-events-none">
+            <div className="w-[380px] h-[90px] rounded-full overflow-hidden crt-overlay" />
+          </div>
+        )}
         <RetroCapsuleWidget
           isPlaying={isPlaying}
           onTogglePlay={handleTogglePlay}
           onNext={handleNext}
           onPrevious={handlePrev}
-          onOpenSettings={() => onOpenSettingsModal(null as any)}
+          onOpenSettings={() => {
+            // Settings can't fit in the 106px pill: expand first, then open.
+            onLayoutModeChange?.('classic');
+            onOpenSettingsModal(null as any);
+          }}
           progressMs={progressMs}
           durationMs={durationMs}
           seekTo={seekTo}
@@ -497,7 +505,13 @@ export const RetroWindow: React.FC<RetroWindowProps> = ({
         className="w-full h-full relative select-none flex items-center justify-center overflow-hidden bg-transparent"
         style={{ fontFamily: '"Press Start 2P", monospace' }}
       >
-        {crtEnabled && <div aria-hidden="true" className="absolute inset-0 crt-overlay z-40 pointer-events-none" />}
+        {/* Scanlines clipped to the iPod body (260x460, r=30) so the transparent
+            window corners stay clear. */}
+        {crtEnabled && (
+          <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center z-40 pointer-events-none">
+            <div className="w-[260px] h-[460px] rounded-[30px] overflow-hidden crt-overlay" />
+          </div>
+        )}
         <RetroIpodView
           layoutMode={layoutMode}
           onLayoutModeChange={onLayoutModeChange}

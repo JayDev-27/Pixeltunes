@@ -188,21 +188,21 @@ export const RetroIpodView: React.FC<RetroIpodViewProps> = ({
     <div className="relative w-full h-full flex items-center justify-center select-none overflow-hidden p-2">
       {/* Outer iPod mini Body */}
       <div
-        className="relative w-[260px] h-[460px] rounded-[30px] border-4 border-[#191244] shadow-pixel-lg flex flex-col items-center justify-between overflow-hidden"
+        className="relative w-[260px] h-[460px] rounded-[30px] border-2 border-[#191244] shadow-[3px_3px_0px_#191244] flex flex-col items-center justify-between overflow-hidden"
         style={{
           backgroundColor: '#e6739f',
           backgroundImage:
-            'linear-gradient(90deg, #ffa8c8 0%, #ff8db7 4%, #e6739f 12%, #e6739f 88%, #c94c7b 96%, #9c2854 100%)',
+            'linear-gradient(90deg, #f99cbf 0%, #ee86ad 6%, #e6739f 14%, #e6739f 86%, #d8628f 95%, #c9557f 100%)',
         }}
       >
         {/* Left specular highlight dither stripe */}
-        <div className="absolute left-0 top-0 bottom-0 w-2.5 bg-gradient-to-r from-white/35 to-transparent pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-r from-white/25 to-transparent pointer-events-none" />
         {/* Right shadow dither stripe */}
-        <div className="absolute right-0 top-0 bottom-0 w-2.5 bg-gradient-to-l from-black/25 to-transparent pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-2 bg-gradient-to-l from-black/10 to-transparent pointer-events-none" />
 
         {/* Top Metallic Cap with Hold Switch & Headphone Jack (Draggable Area) */}
         <div
-          className="w-full h-7 bg-[#d2d6dc] border-b-2 border-[#191244] flex items-center justify-between px-3.5 shrink-0 relative z-30 cursor-grab active:cursor-grabbing app-drag"
+          className="w-full h-7 bg-[#d2d6dc] border-b-[1.5px] border-[#191244] flex items-center justify-between px-3.5 shrink-0 relative z-30 cursor-grab active:cursor-grabbing app-drag"
           style={{ WebkitAppRegion: 'drag' as any }}
         >
           {/* Hold Switch (Left) */}
@@ -256,7 +256,7 @@ export const RetroIpodView: React.FC<RetroIpodViewProps> = ({
         </div>
 
         {/* Inset LCD Screen Bezel */}
-        <div className="w-[220px] h-[175px] mt-2 border-3 border-[#191244] rounded-[6px] shadow-inner p-1.5 bg-[#b8bec5] flex flex-col shrink-0 relative overflow-hidden">
+        <div className="w-[220px] h-[175px] mt-2 border-2 border-[#191244] rounded-[6px] shadow-inner p-1.5 bg-[#b8bec5] flex flex-col shrink-0 relative overflow-hidden">
           {/* LCD Screen Display */}
           <div
             className={`w-full h-full border border-[#191244]/40 rounded-[3px] flex flex-col overflow-hidden relative ${
@@ -447,7 +447,7 @@ export const RetroIpodView: React.FC<RetroIpodViewProps> = ({
           onWheel={handleWheelNav}
         >
           {/* The Classic White Click Wheel Disc */}
-          <div className="relative w-[138px] h-[138px] rounded-full bg-[#fbfbfa] border-3 border-[#191244] shadow-pixel-md flex items-center justify-center">
+          <div className="relative w-[138px] h-[138px] rounded-full bg-[#fbfbfa] border-2 border-[#191244] shadow-[2px_2px_0px_rgba(25,18,68,0.35)] flex items-center justify-center">
             {/* Top Quadrant: MENU */}
             <button
               type="button"
@@ -510,7 +510,7 @@ export const RetroIpodView: React.FC<RetroIpodViewProps> = ({
         </div>
 
         {/* Bottom Dock Connector outline & rim */}
-        <div className="w-full h-3 bg-[#d2d6dc] border-t-2 border-[#191244] flex items-center justify-center shrink-0">
+        <div className="w-full h-3 bg-[#d2d6dc] border-t-[1.5px] border-[#191244] flex items-center justify-center shrink-0">
           <div className="w-10 h-1 bg-[#191244]/50 rounded-[1px]" />
         </div>
       </div>

@@ -271,6 +271,9 @@ export function App() {
   }, []);
 
   const handleLayoutModeChange = (mode: PlayerLayoutMode) => {
+    // The capsule window is only 106px tall, so any open dialog would be
+    // crushed into it. Close dialogs before shrinking.
+    if (mode === 'capsule') setModal(null);
     setLayoutMode(mode);
     window.electronAPI?.setLayoutMode?.(mode);
     if (isElectron && window.electronAPI?.setSize) {
@@ -280,6 +283,12 @@ export function App() {
       } else if (mode === 'card') {
         const { width, height } = getCardDimensions(scale);
         window.electronAPI.setSize(width, height, { minWidth: 256, minHeight: 368 });
+      } else if (mode === 'capsule') {
+        // Size the window to the pill itself (no CSS scaling, which breaks
+        // Electron's drag/click regions) and dock it under the tray once.
+        window.electronAPI.setSize(CAPSULE_WIDTH, CAPSULE_HEIGHT, {
+          minWidth: CAPSULE_WIDTH, minHeight: CAPSULE_HEIGHT, dockToMenuBar: true, isMenuBar: true,
+        });
       } else {
         window.electronAPI.setSize(480, 273, { minWidth: 480, minHeight: 273 });
       }
@@ -296,7 +305,7 @@ export function App() {
         const { width, height } = getCardDimensions(nextScale);
         window.electronAPI.setSize(width, height);
       } else if (layoutMode === 'capsule') {
-        window.electronAPI.setSize(CAPSULE_WIDTH, CAPSULE_HEIGHT, { dockToMenuBar: true, isMenuBar: true });
+        window.electronAPI.setSize(CAPSULE_WIDTH, CAPSULE_HEIGHT, { minWidth: CAPSULE_WIDTH, minHeight: CAPSULE_HEIGHT, isMenuBar: true });
       } else {
         window.electronAPI.setSize(SCALES[nextScale].width, SCALES[nextScale].height);
       }

@@ -956,8 +956,8 @@ ipcMain.on('window:set-size', (event, dimensions) => {
   if (!Number.isFinite(width) || !Number.isFinite(height)) return;
   playerScale = null;
 
-  const effectiveMinWidth = minWidth ?? (playerLayoutMode === 'classic' ? 480 : playerLayoutMode === 'card' ? 256 : 230);
-  const effectiveMinHeight = minHeight ?? (playerLayoutMode === 'classic' ? 273 : playerLayoutMode === 'card' ? 368 : 405);
+  const effectiveMinWidth = minWidth ?? (playerLayoutMode === 'classic' ? 480 : playerLayoutMode === 'card' ? 256 : playerLayoutMode === 'capsule' ? 400 : 230);
+  const effectiveMinHeight = minHeight ?? (playerLayoutMode === 'classic' ? 273 : playerLayoutMode === 'card' ? 368 : playerLayoutMode === 'capsule' ? 106 : 405);
 
   if (mainWindow && !mainWindow.isDestroyed()) {
     mainWindow.setMinimumSize(effectiveMinWidth, effectiveMinHeight);
@@ -969,8 +969,8 @@ ipcMain.on('window:set-size', (event, dimensions) => {
 ipcMain.on('window:set-layout-mode', (event, mode) => {
   if (!fromApp(event) || typeof mode !== 'string') return;
   playerLayoutMode = mode;
-  const effectiveMinWidth = playerLayoutMode === 'classic' ? 480 : playerLayoutMode === 'card' ? 256 : 230;
-  const effectiveMinHeight = playerLayoutMode === 'classic' ? 273 : playerLayoutMode === 'card' ? 368 : 405;
+  const effectiveMinWidth = playerLayoutMode === 'classic' ? 480 : playerLayoutMode === 'card' ? 256 : playerLayoutMode === 'capsule' ? 400 : 230;
+  const effectiveMinHeight = playerLayoutMode === 'classic' ? 273 : playerLayoutMode === 'card' ? 368 : playerLayoutMode === 'capsule' ? 106 : 405;
   if (mainWindow && !mainWindow.isDestroyed()) {
     mainWindow.setMinimumSize(effectiveMinWidth, effectiveMinHeight);
   }

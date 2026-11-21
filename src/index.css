@@ -292,3 +292,8 @@ button:disabled, .pixel-scrubber:disabled {
 [data-layout="card"] .title-emojis {
   display: none;
 }
+
+/* Interactive controls must never act as window drag handles (Electron). */
+button, input, select, textarea, a, [role="button"], .cursor-pointer {
+  -webkit-app-region: no-drag;
+}

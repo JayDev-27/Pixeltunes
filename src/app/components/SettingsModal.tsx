@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { THEMES, RetroTheme } from '../../types/theme';
+import { ClassicIcon, CardIcon, IpodIcon, CapsuleIcon, SparkleIcon, AlbumIcon, CassetteIcon } from './PixelModeIcons';
 import { PLAYER_SCALES, SCALES, PlayerScale, PlayerLayoutMode } from '../../types/scale';
 import { playClickSound, setSoundEffectsEnabled } from '../../shared/services/soundEffects';
 import {
@@ -63,9 +64,12 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
 
   if (!isOpen) return null;
 
+  // Card and iPod frames are ~260-320px wide: tighten chrome so nothing clips.
+  const compact = layoutMode === 'card' || layoutMode === 'ipod';
+
   return (
     <div
-      className="absolute inset-0 z-50 flex items-center justify-center p-3 bg-black/75 backdrop-blur-xs select-none app-no-drag"
+      className={`absolute inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-xs select-none app-no-drag ${layoutMode === 'ipod' ? 'rounded-[30px] m-[5px] p-4' : compact ? 'p-2' : 'p-3'}`}
       style={{ WebkitAppRegion: 'no-drag' as any }}
       onClick={(e) => {
         if (e.target === e.currentTarget) {
@@ -75,7 +79,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
       }}
     >
       <div
-        className="w-[560px] max-w-[95%] max-h-[380px] flex flex-col min-h-0 border-4 shadow-pixel-lg overflow-hidden app-no-drag"
+        className={`w-[560px] max-w-full ${compact ? 'max-h-full' : 'max-h-[380px]'} flex flex-col min-h-0 border-4 shadow-pixel-lg overflow-hidden app-no-drag`}
         style={{ backgroundColor: currentTheme.windowBg, borderColor: currentTheme.primaryBorder, WebkitAppRegion: 'no-drag' as any }}
       >
         {/* Fixed Title Bar */}
@@ -83,15 +87,15 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           className="border-b-4 px-3 py-1.5 flex items-center justify-between shrink-0 app-no-drag"
           style={{ backgroundColor: currentTheme.titleBarBg, borderColor: currentTheme.primaryBorder, color: currentTheme.controlBtnText, WebkitAppRegion: 'no-drag' as any }}
         >
-          <div className="flex items-center gap-2 app-no-drag">
-            <span className="font-pixel text-xs tracking-wider font-bold">
+          <div className="flex items-center gap-2 min-w-0 app-no-drag">
+            <span className={`font-pixel tracking-wider font-bold truncate ${compact ? 'text-[10px]' : 'text-xs'}`}>
               SETTINGS.INI
             </span>
-            <span className="px-1.5 py-0.5 bg-[#fffdf5] text-[#191244] border border-[#191244] font-pixel text-[7.5px] font-bold shadow-pixel-xs">
+            <span className={`${compact ? 'hidden' : ''} px-1.5 py-0.5 bg-[#fffdf5] text-[#191244] border border-[#191244] font-pixel text-[7.5px] font-bold shadow-pixel-xs`}>
               v1.2.1
             </span>
           </div>
-          <div className="flex items-center gap-2 app-no-drag">
+          <div className="flex items-center gap-2 shrink-0 app-no-drag">
             <button
               type="button"
               onMouseDown={(e) => e.stopPropagation()}
@@ -101,7 +105,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 playClickSound();
                 onClose();
               }}
-              className="px-2 py-0.5 bg-[#fffdf5] text-[#191244] border-2 border-[#191244] font-pixel text-[9px] hover:bg-[#ffe6f0] active:translate-y-0.5 cursor-pointer font-bold app-no-drag"
+              className={`${compact ? 'hidden' : ''} px-2 py-0.5 bg-[#fffdf5] text-[#191244] border-2 border-[#191244] font-pixel text-[9px] hover:bg-[#ffe6f0] active:translate-y-0.5 cursor-pointer font-bold app-no-drag`}
               style={{ WebkitAppRegion: 'no-drag' as any }}
             >
               ← BACK
@@ -134,7 +138,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               </label>
             </div>
             {/* Layout Style Choice */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-2">
+            <div className={`grid gap-2 mb-2 ${compact ? "grid-cols-2" : "grid-cols-2 sm:grid-cols-4"}`}>
               <button
                 type="button"
                 aria-pressed={layoutMode === 'classic'}
@@ -148,7 +152,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     : 'bg-[#fffdf5] text-[#191244] hover:bg-[#ffe6f0]'
                 }`}
               >
-                <div>◫ CLASSIC</div>
+                <div className="flex items-center gap-1.5"><ClassicIcon className="w-3.5 h-3.5" />CLASSIC</div>
                 <div className="text-[7px] opacity-75 mt-0.5 font-sans">Wide Window</div>
               </button>
               <button
@@ -164,7 +168,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     : 'bg-[#fffdf5] text-[#191244] hover:bg-[#ffe6f0]'
                 }`}
               >
-                <div>▯ CARD</div>
+                <div className="flex items-center gap-1.5"><CardIcon className="w-3.5 h-3.5" />CARD</div>
                 <div className="text-[7px] opacity-75 mt-0.5 font-sans">Polaroid Art</div>
               </button>
               <button
@@ -180,7 +184,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     : 'bg-[#fffdf5] text-[#191244] hover:bg-[#ffe6f0]'
                 }`}
               >
-                <div>📟 IPOD MINI</div>
+                <div className="flex items-center gap-1.5"><IpodIcon className="w-3.5 h-3.5" />IPOD MINI</div>
                 <div className="text-[7px] opacity-75 mt-0.5 font-sans">Click Wheel</div>
               </button>
               <button
@@ -196,7 +200,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     : 'bg-[#fffdf5] text-[#191244] hover:bg-[#ffe6f0]'
                 }`}
               >
-                <div>💊 CAPSULE</div>
+                <div className="flex items-center gap-1.5"><CapsuleIcon className="w-3.5 h-3.5" />CAPSULE</div>
                 <div className="text-[7px] opacity-75 mt-0.5 font-sans">Menu Bar</div>
               </button>
             </div>
@@ -254,7 +258,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     : 'bg-[#fffdf5] text-[#191244] hover:bg-[#ffe6f0]'
                 }`}
               >
-                <span className="text-[11px] leading-none mb-1">✨</span>
+                <SparkleIcon className="w-4 h-4 mb-1" />
                 <span>PIXEL COVERS</span>
               </button>
               <button
@@ -270,7 +274,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     : 'bg-[#fffdf5] text-[#191244] hover:bg-[#ffe6f0]'
                 }`}
               >
-                <span className="text-[11px] leading-none mb-1">🎨</span>
+                <AlbumIcon className="w-4 h-4 mb-1" />
                 <span>SPOTIFY ART</span>
               </button>
               <button
@@ -286,7 +290,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     : 'bg-[#fffdf5] text-[#191244] hover:bg-[#ffe6f0]'
                 }`}
               >
-                <span className="text-[11px] leading-none mb-1">📼</span>
+                <CassetteIcon className="w-4 h-4 mb-1" />
                 <span>CASSETTE</span>
               </button>
             </div>
@@ -474,7 +478,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
 
           {/* Close & Version Info */}
           <div className="pt-2 flex justify-between items-center select-none">
-            <div className="flex items-center gap-1.5 opacity-70">
+            <div className={`flex items-center gap-1.5 opacity-70 ${compact ? 'hidden' : ''}`}>
               <span className="font-pixel text-[8px] text-[#191244] font-bold">
                 PIXELTUNES v1.2.1
               </span>
@@ -487,7 +491,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 playClickSound();
                 onClose();
               }}
-              className="px-4 py-2 bg-[#fec5db] text-[#191244] font-pixel text-xs border-2 border-[#191244] shadow-pixel hover:bg-[#ffe6f0]"
+              className={`bg-[#fec5db] text-[#191244] font-pixel border-2 border-[#191244] shadow-pixel hover:bg-[#ffe6f0] whitespace-nowrap ${compact ? 'w-full px-2 py-1.5 text-[10px]' : 'px-4 py-2 text-xs'}`}
             >
               APPLY & CLOSE
             </button>

@@ -52,7 +52,8 @@ export const RetroCapsuleWidget: React.FC<RetroCapsuleWidgetProps> = ({
         style={{
           backgroundColor: '#f2b7c6',
           backgroundImage: 'linear-gradient(180deg, #f7c3d1 0%, #f2b7c6 50%, #f0a8b9 100%)',
-          WebkitAppRegion: 'no-drag' as any,
+          // The pill body is the drag handle; interactive children opt out below.
+          WebkitAppRegion: 'drag' as any,
         }}
       >
         {/* Top Floating Mini Actions: Settings, Expand to Full Window, Close */}
